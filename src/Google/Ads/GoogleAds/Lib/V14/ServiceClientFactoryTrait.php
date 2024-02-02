@@ -209,7 +209,7 @@ trait ServiceClientFactoryTrait
                 ...$this->getGrpcInterceptors()
             );
         }
-        
+
         if (!empty($this->getProxy())) {
             putenv('http_proxy=' . $this->getProxy());
         }
