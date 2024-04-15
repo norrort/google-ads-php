@@ -62,6 +62,11 @@ final class CustomerServiceClient
         GoogleAdsGapicClientTrait::modifyClientOptions insteadof GapicClientTrait;
         GoogleAdsGapicClientTrait::modifyUnaryCallable insteadof GapicClientTrait;
         GoogleAdsGapicClientTrait::modifyStreamingCallable insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::pluck insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::pluckArray insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::arrayFilterRemoveNull insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::isAssoc insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::subsetArray insteadof GapicClientTrait;
     }
     use ResourceHelperTrait;
 
@@ -92,15 +97,15 @@ final class CustomerServiceClient
     private static function getClientDefaults()
     {
         return [
-            'serviceName' => self::SERVICE_NAME,
-            'apiEndpoint' => self::SERVICE_ADDRESS . ':' . self::DEFAULT_SERVICE_PORT,
-            'clientConfig' => __DIR__ . '/../resources/customer_service_client_config.json',
+            'serviceName'           => self::SERVICE_NAME,
+            'apiEndpoint'           => self::SERVICE_ADDRESS . ':' . self::DEFAULT_SERVICE_PORT,
+            'clientConfig'          => __DIR__ . '/../resources/customer_service_client_config.json',
             'descriptorsConfigPath' => __DIR__ . '/../resources/customer_service_descriptor_config.php',
-            'gcpApiConfigPath' => __DIR__ . '/../resources/customer_service_grpc_config.json',
-            'credentialsConfig' => [
+            'gcpApiConfigPath'      => __DIR__ . '/../resources/customer_service_grpc_config.json',
+            'credentialsConfig'     => [
                 'defaultScopes' => self::$serviceScopes,
             ],
-            'transportConfig' => [
+            'transportConfig'       => [
                 'rest' => [
                     'restClientConfigPath' => __DIR__ . '/../resources/customer_service_rest_client_config.php',
                 ],
@@ -120,7 +125,7 @@ final class CustomerServiceClient
     public static function conversionActionName(string $customerId, string $conversionActionId): string
     {
         return self::getPathTemplate('conversionAction')->render([
-            'customer_id' => $customerId,
+            'customer_id'          => $customerId,
             'conversion_action_id' => $conversionActionId,
         ]);
     }
@@ -168,54 +173,54 @@ final class CustomerServiceClient
     /**
      * Constructor.
      *
-     * @param array $options {
-     *     Optional. Options for configuring the service API wrapper.
+     * @param array                                                  $options {
+     *                                                                        Optional. Options for configuring the service API wrapper.
      *
-     *     @type string $apiEndpoint
-     *           The address of the API remote host. May optionally include the port, formatted
-     *           as "<uri>:<port>". Default 'googleads.googleapis.com:443'.
-     *     @type string|array|FetchAuthTokenInterface|CredentialsWrapper $credentials
-     *           The credentials to be used by the client to authorize API calls. This option
-     *           accepts either a path to a credentials file, or a decoded credentials file as a
-     *           PHP array.
-     *           *Advanced usage*: In addition, this option can also accept a pre-constructed
-     *           {@see \Google\Auth\FetchAuthTokenInterface} object or
-     *           {@see \Google\ApiCore\CredentialsWrapper} object. Note that when one of these
-     *           objects are provided, any settings in $credentialsConfig will be ignored.
-     *     @type array $credentialsConfig
-     *           Options used to configure credentials, including auth token caching, for the
-     *           client. For a full list of supporting configuration options, see
-     *           {@see \Google\ApiCore\CredentialsWrapper::build()} .
-     *     @type bool $disableRetries
-     *           Determines whether or not retries defined by the client configuration should be
-     *           disabled. Defaults to `false`.
-     *     @type string|array $clientConfig
-     *           Client method configuration, including retry settings. This option can be either
-     *           a path to a JSON file, or a PHP array containing the decoded JSON data. By
-     *           default this settings points to the default client config file, which is
-     *           provided in the resources folder.
-     *     @type string|TransportInterface $transport
-     *           The transport used for executing network requests. May be either the string
-     *           `rest` or `grpc`. Defaults to `grpc` if gRPC support is detected on the system.
-     *           *Advanced usage*: Additionally, it is possible to pass in an already
-     *           instantiated {@see \Google\ApiCore\Transport\TransportInterface} object. Note
-     *           that when this object is provided, any settings in $transportConfig, and any
-     *           $apiEndpoint setting, will be ignored.
-     *     @type array $transportConfig
-     *           Configuration options that will be used to construct the transport. Options for
-     *           each supported transport type should be passed in a key for that transport. For
-     *           example:
-     *           $transportConfig = [
-     *               'grpc' => [...],
-     *               'rest' => [...],
-     *           ];
-     *           See the {@see \Google\ApiCore\Transport\GrpcTransport::build()} and
-     *           {@see \Google\ApiCore\Transport\RestTransport::build()} methods for the
-     *           supported options.
-     *     @type callable $clientCertSource
-     *           A callable which returns the client cert as a string. This can be used to
-     *           provide a certificate and private key to the transport layer for mTLS.
-     * }
+     * @type string                                                  $apiEndpoint
+     *                                                                        The address of the API remote host. May optionally include the port, formatted
+     *                                                                        as "<uri>:<port>". Default 'googleads.googleapis.com:443'.
+     * @type string|array|FetchAuthTokenInterface|CredentialsWrapper $credentials
+     *                                                                        The credentials to be used by the client to authorize API calls. This option
+     *                                                                        accepts either a path to a credentials file, or a decoded credentials file as a
+     *                                                                        PHP array.
+     *                                                                        *Advanced usage*: In addition, this option can also accept a pre-constructed
+     *                                                                        {@see \Google\Auth\FetchAuthTokenInterface} object or
+     *                                                                        {@see \Google\ApiCore\CredentialsWrapper} object. Note that when one of these
+     *                                                                        objects are provided, any settings in $credentialsConfig will be ignored.
+     * @type array                                                   $credentialsConfig
+     *                                                                        Options used to configure credentials, including auth token caching, for the
+     *                                                                        client. For a full list of supporting configuration options, see
+     *                                                                        {@see \Google\ApiCore\CredentialsWrapper::build()} .
+     * @type bool                                                    $disableRetries
+     *                                                                        Determines whether or not retries defined by the client configuration should be
+     *                                                                        disabled. Defaults to `false`.
+     * @type string|array                                            $clientConfig
+     *                                                                        Client method configuration, including retry settings. This option can be either
+     *                                                                        a path to a JSON file, or a PHP array containing the decoded JSON data. By
+     *                                                                        default this settings points to the default client config file, which is
+     *                                                                        provided in the resources folder.
+     * @type string|TransportInterface                               $transport
+     *                                                                        The transport used for executing network requests. May be either the string
+     *                                                                        `rest` or `grpc`. Defaults to `grpc` if gRPC support is detected on the system.
+     *                                                                        *Advanced usage*: Additionally, it is possible to pass in an already
+     *                                                                        instantiated {@see \Google\ApiCore\Transport\TransportInterface} object. Note
+     *                                                                        that when this object is provided, any settings in $transportConfig, and any
+     *                                                                        $apiEndpoint setting, will be ignored.
+     * @type array                                                   $transportConfig
+     *                                                                        Configuration options that will be used to construct the transport. Options for
+     *                                                                        each supported transport type should be passed in a key for that transport. For
+     *                                                                        example:
+     *                                                                        $transportConfig = [
+     *                                                                        'grpc' => [...],
+     *                                                                        'rest' => [...],
+     *                                                                        ];
+     *                                                                        See the {@see \Google\ApiCore\Transport\GrpcTransport::build()} and
+     *                                                                        {@see \Google\ApiCore\Transport\RestTransport::build()} methods for the
+     *                                                                        supported options.
+     * @type callable                                                $clientCertSource
+     *                                                                        A callable which returns the client cert as a string. This can be used to
+     *                                                                        provide a certificate and private key to the transport layer for mTLS.
+     *                                                                        }
      *
      * @throws ValidationException
      */
@@ -256,13 +261,13 @@ final class CustomerServiceClient
      *
      * @param CreateCustomerClientRequest $request     A request to house fields associated with the call.
      * @param array                       $callOptions {
-     *     Optional.
+     *                                                 Optional.
      *
-     *     @type RetrySettings|array $retrySettings
-     *           Retry settings to use for this call. Can be a {@see RetrySettings} object, or an
-     *           associative array of retry settings parameters. See the documentation on
-     *           {@see RetrySettings} for example usage.
-     * }
+     * @type RetrySettings|array          $retrySettings
+     *                                                 Retry settings to use for this call. Can be a {@see RetrySettings} object, or an
+     *                                                 associative array of retry settings parameters. See the documentation on
+     *                                                 {@see RetrySettings} for example usage.
+     *                                                 }
      *
      * @return CreateCustomerClientResponse
      *
@@ -290,13 +295,13 @@ final class CustomerServiceClient
      *
      * @param ListAccessibleCustomersRequest $request     A request to house fields associated with the call.
      * @param array                          $callOptions {
-     *     Optional.
+     *                                                    Optional.
      *
-     *     @type RetrySettings|array $retrySettings
-     *           Retry settings to use for this call. Can be a {@see RetrySettings} object, or an
-     *           associative array of retry settings parameters. See the documentation on
-     *           {@see RetrySettings} for example usage.
-     * }
+     * @type RetrySettings|array             $retrySettings
+     *                                                    Retry settings to use for this call. Can be a {@see RetrySettings} object, or an
+     *                                                    associative array of retry settings parameters. See the documentation on
+     *                                                    {@see RetrySettings} for example usage.
+     *                                                    }
      *
      * @return ListAccessibleCustomersResponse
      *
@@ -325,13 +330,13 @@ final class CustomerServiceClient
      *
      * @param MutateCustomerRequest $request     A request to house fields associated with the call.
      * @param array                 $callOptions {
-     *     Optional.
+     *                                           Optional.
      *
-     *     @type RetrySettings|array $retrySettings
-     *           Retry settings to use for this call. Can be a {@see RetrySettings} object, or an
-     *           associative array of retry settings parameters. See the documentation on
-     *           {@see RetrySettings} for example usage.
-     * }
+     * @type RetrySettings|array    $retrySettings
+     *                                           Retry settings to use for this call. Can be a {@see RetrySettings} object, or an
+     *                                           associative array of retry settings parameters. See the documentation on
+     *                                           {@see RetrySettings} for example usage.
+     *                                           }
      *
      * @return MutateCustomerResponse
      *
