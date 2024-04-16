@@ -50,6 +50,11 @@ final class BrandSuggestionServiceClient
         GoogleAdsGapicClientTrait::modifyClientOptions insteadof GapicClientTrait;
         GoogleAdsGapicClientTrait::modifyUnaryCallable insteadof GapicClientTrait;
         GoogleAdsGapicClientTrait::modifyStreamingCallable insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::pluck insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::pluckArray insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::isAssoc insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::subsetArray insteadof GapicClientTrait;
+        GoogleAdsGapicClientTrait::arrayFilterRemoveNull insteadof GapicClientTrait;
     }
 
     /** The name of the service. */
