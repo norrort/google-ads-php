@@ -27,7 +27,7 @@ use Google\ApiCore\ServerStream;
  */
 class GoogleAdsServerStreamDecorator extends ServerStream
 {
-    protected ServerStream $serverStream;
+    protected $serverStream;
 
     /**
      * @param ServerStream $serverStream the ServerStream to wrap

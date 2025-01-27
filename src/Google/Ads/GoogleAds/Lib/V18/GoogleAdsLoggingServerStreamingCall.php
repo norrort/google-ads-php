@@ -26,9 +26,9 @@ use Grpc\ServerStreamingCall;
  */
 class GoogleAdsLoggingServerStreamingCall extends ForwardingServerStreamingCall
 {
-    private GoogleAdsCallLogger $googleAdsCallLogger;
-    private array $lastRequestData;
-    private array $storedResponses;
+    private $googleAdsCallLogger;
+    private $lastRequestData;
+    private $storedResponses;
 
     /**
      * Constructs the LoggingSeverStreamingCall using the inner call and logging intercepter.

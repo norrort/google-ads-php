@@ -26,8 +26,8 @@ use Grpc\UnaryCall;
  */
 class GoogleAdsLoggingUnaryCall extends ForwardingUnaryCall
 {
-    private GoogleAdsCallLogger $googleAdsCallLogger;
-    private array $lastRequestData;
+    private $googleAdsCallLogger;
+    private $lastRequestData;
 
     /**
      * Constructs the LoggingUnaryCall using the inner call and logging intercepter.
