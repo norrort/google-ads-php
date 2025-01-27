@@ -25,15 +25,15 @@ use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Examples\Utils\Helper;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\V16\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
-use Google\Ads\GoogleAds\V16\Enums\SeasonalityEventScopeEnum\SeasonalityEventScope;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\BiddingSeasonalityAdjustment;
-use Google\Ads\GoogleAds\V16\Services\BiddingSeasonalityAdjustmentOperation;
-use Google\Ads\GoogleAds\V16\Services\MutateBiddingSeasonalityAdjustmentsRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\V18\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
+use Google\Ads\GoogleAds\V18\Enums\SeasonalityEventScopeEnum\SeasonalityEventScope;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\BiddingSeasonalityAdjustment;
+use Google\Ads\GoogleAds\V18\Services\BiddingSeasonalityAdjustmentOperation;
+use Google\Ads\GoogleAds\V18\Services\MutateBiddingSeasonalityAdjustmentsRequest;
 use Google\ApiCore\ApiException;
 
 /**
@@ -69,12 +69,6 @@ class AddBiddingSeasonalityAdjustment
         $googleAdsClient = (new GoogleAdsClientBuilder())
             ->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {

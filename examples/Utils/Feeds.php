@@ -18,22 +18,20 @@
 
 namespace Google\Ads\GoogleAds\Examples\Utils;
 
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\V16\Enums\FlightPlaceholderFieldEnum\FlightPlaceholderField;
-use Google\Ads\GoogleAds\V16\Enums\RealEstatePlaceholderFieldEnum\RealEstatePlaceholderField;
-use Google\Ads\GoogleAds\V16\Resources\FeedAttribute;
-use Google\Ads\GoogleAds\V16\Resources\FeedItem;
-use Google\Ads\GoogleAds\V16\Resources\FeedItemAttributeValue;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\V18\Enums\FlightPlaceholderFieldEnum\FlightPlaceholderField;
+use Google\Ads\GoogleAds\V18\Enums\RealEstatePlaceholderFieldEnum\RealEstatePlaceholderField;
+use Google\Ads\GoogleAds\V18\Resources\FeedAttribute;
+use Google\Ads\GoogleAds\V18\Resources\FeedItem;
+use Google\Ads\GoogleAds\V18\Resources\FeedItemAttributeValue;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsRequest;
 
 /**
  * Utilities that are shared between code examples related to feeds.
  */
 final class Feeds
 {
-    private const PAGE_SIZE = 1000;
-
     /**
      * Retrieves a feed item and its attribute values given a resource name.
      *
@@ -51,12 +49,9 @@ final class Feeds
         // Constructs the query to get the feed item with attribute values.
         $query = "SELECT feed_item.attribute_values FROM feed_item"
             . " WHERE feed_item.resource_name = '$feedItemResourceName'";
-        // Issues a search request by specifying page size.
-        $response = ($googleAdsClient->useGapicV2Source())
-            ? $googleAdsServiceClient->search(
-                SearchGoogleAdsRequest::build($customerId, $query)->setPageSize(self::PAGE_SIZE)
-            )
-            : $googleAdsServiceClient->search($customerId, $query, ['pageSize' => self::PAGE_SIZE]);
+        // Issues a search request.
+        $response =
+            $googleAdsServiceClient->search(SearchGoogleAdsRequest::build($customerId, $query));
 
         // Returns the feed item attribute values, which belongs to the first item. We can ensure
         // it belongs to the first one because we specified the feed item resource name in the
@@ -190,12 +185,9 @@ final class Feeds
         $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
         // Constructs the query to get the feed attributes for the specified feed resource name.
         $query = "SELECT feed.attributes FROM feed WHERE feed.resource_name = '$feedResourceName'";
-        // Issues a search request by specifying page size.
-        $response = ($googleAdsClient->useGapicV2Source())
-            ? $googleAdsServiceClient->search(
-                SearchGoogleAdsRequest::build($customerId, $query)->setPageSize(self::PAGE_SIZE)
-            )
-            : $googleAdsServiceClient->search($customerId, $query, ['pageSize' => self::PAGE_SIZE]);
+        // Issues a search request.
+        $response =
+            $googleAdsServiceClient->search(SearchGoogleAdsRequest::build($customerId, $query));
 
         // Gets the first result because we only need the single feed we created previously.
         /** @var GoogleAdsRow $googleAdsRow */

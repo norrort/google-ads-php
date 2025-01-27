@@ -23,16 +23,16 @@ require __DIR__ . '/../../vendor/autoload.php';
 use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\V16\Common\AdTextAsset;
-use Google\Ads\GoogleAds\V16\Enums\AdGroupAdStatusEnum\AdGroupAdStatus;
-use Google\Ads\GoogleAds\V16\Enums\ServedAssetFieldTypeEnum\ServedAssetFieldType;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\V18\Common\AdTextAsset;
+use Google\Ads\GoogleAds\V18\Enums\AdGroupAdStatusEnum\AdGroupAdStatus;
+use Google\Ads\GoogleAds\V18\Enums\ServedAssetFieldTypeEnum\ServedAssetFieldType;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsRequest;
 use Google\ApiCore\ApiException;
 use Google\Protobuf\Internal\RepeatedField;
 
@@ -46,8 +46,6 @@ class GetResponsiveSearchAds
     private const CUSTOMER_ID = 'INSERT_CUSTOMER_ID_HERE';
     // Optional: Specify an ad group ID below to restrict search to only a given ad group.
     private const AD_GROUP_ID = null;
-
-    private const PAGE_SIZE = 1000;
 
     public static function main()
     {
@@ -65,12 +63,6 @@ class GetResponsiveSearchAds
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
@@ -135,10 +127,9 @@ class GetResponsiveSearchAds
             $query .= " AND ad_group.id = $adGroupId";
         }
 
-        // Issues a search request by specifying page size.
-        $response = $googleAdsServiceClient->search(
-            SearchGoogleAdsRequest::build($customerId, $query)->setPageSize(self::PAGE_SIZE)
-        );
+        // Issues a search request.
+        $response =
+            $googleAdsServiceClient->search(SearchGoogleAdsRequest::build($customerId, $query));
 
         // Iterates over all rows in all pages and prints the requested field values for
         // the responsive search ad in each row.

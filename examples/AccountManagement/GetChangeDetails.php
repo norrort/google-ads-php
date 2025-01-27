@@ -25,16 +25,16 @@ use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
 use Google\Ads\GoogleAds\Util\FieldMasks;
-use Google\Ads\GoogleAds\V16\Enums\ChangeClientTypeEnum\ChangeClientType;
-use Google\Ads\GoogleAds\V16\Enums\ChangeEventResourceTypeEnum\ChangeEventResourceType;
-use Google\Ads\GoogleAds\V16\Enums\ResourceChangeOperationEnum\ResourceChangeOperation;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\V18\Enums\ChangeClientTypeEnum\ChangeClientType;
+use Google\Ads\GoogleAds\V18\Enums\ChangeEventResourceTypeEnum\ChangeEventResourceType;
+use Google\Ads\GoogleAds\V18\Enums\ResourceChangeOperationEnum\ResourceChangeOperation;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsRequest;
 use Google\ApiCore\ApiException;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -46,7 +46,6 @@ use Google\Protobuf\Internal\RepeatedField;
 class GetChangeDetails
 {
     private const CUSTOMER_ID = 'INSERT_CUSTOMER_ID_HERE';
-    private const PAGE_SIZE = 1000;
 
     public static function main()
     {
@@ -63,12 +62,6 @@ class GetChangeDetails
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
@@ -139,13 +132,9 @@ class GetChangeDetails
                 date_format(new DateTime('-14 days'), 'Ymd')
             ) . 'ORDER BY change_event.change_date_time DESC '
             . 'LIMIT 5';
-        // Issues a search request by specifying page size.
-        // The page size is superfluous with the default limit set above, but it's
-        // shown here since it's a good practice to use a reasonable page size when
-        // you set a higher limit.
-        $response = $googleAdsServiceClient->search(
-            SearchGoogleAdsRequest::build($customerId, $query)->setPageSize(self::PAGE_SIZE)
-        );
+        // Issues a search request.
+        $response =
+            $googleAdsServiceClient->search(SearchGoogleAdsRequest::build($customerId, $query));
 
         // Iterates over all rows in all pages and prints the requested field values for
         // the change event in each row.

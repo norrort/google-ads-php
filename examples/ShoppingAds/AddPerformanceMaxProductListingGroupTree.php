@@ -24,25 +24,25 @@ use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Enums\ListingGroupFilterListingSourceEnum\ListingGroupFilterListingSource;
-use Google\Ads\GoogleAds\V16\Enums\ListingGroupFilterProductConditionEnum\ListingGroupFilterProductCondition;
-use Google\Ads\GoogleAds\V16\Enums\ListingGroupFilterTypeEnum\ListingGroupFilterType;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\AssetGroupListingGroupFilter;
-use Google\Ads\GoogleAds\V16\Resources\ListingGroupFilterDimension;
-use Google\Ads\GoogleAds\V16\Resources\ListingGroupFilterDimension\ProductBrand;
-use Google\Ads\GoogleAds\V16\Resources\ListingGroupFilterDimension\ProductCondition;
-use Google\Ads\GoogleAds\V16\Services\AssetGroupListingGroupFilterOperation;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\MutateGoogleAdsRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateGoogleAdsResponse;
-use Google\Ads\GoogleAds\V16\Services\MutateOperation;
-use Google\Ads\GoogleAds\V16\Services\MutateOperationResponse;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Enums\ListingGroupFilterListingSourceEnum\ListingGroupFilterListingSource;
+use Google\Ads\GoogleAds\V18\Enums\ListingGroupFilterProductConditionEnum\ListingGroupFilterProductCondition;
+use Google\Ads\GoogleAds\V18\Enums\ListingGroupFilterTypeEnum\ListingGroupFilterType;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\AssetGroupListingGroupFilter;
+use Google\Ads\GoogleAds\V18\Resources\ListingGroupFilterDimension;
+use Google\Ads\GoogleAds\V18\Resources\ListingGroupFilterDimension\ProductBrand;
+use Google\Ads\GoogleAds\V18\Resources\ListingGroupFilterDimension\ProductCondition;
+use Google\Ads\GoogleAds\V18\Services\AssetGroupListingGroupFilterOperation;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\MutateGoogleAdsRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateGoogleAdsResponse;
+use Google\Ads\GoogleAds\V18\Services\MutateOperation;
+use Google\Ads\GoogleAds\V18\Services\MutateOperationResponse;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsRequest;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Serializer;
 
@@ -73,8 +73,6 @@ class AddPerformanceMaxProductListingGroupTree
     // Temporary IDs are always negative and unique within one mutate request.
     private const LISTING_GROUP_ROOT_TEMPORARY_ID = -1;
 
-    private const PAGE_SIZE = 1000;
-
     public static function main()
     {
         // Either pass the required parameters for this example on the command line, or insert them
@@ -92,12 +90,6 @@ class AddPerformanceMaxProductListingGroupTree
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
@@ -297,10 +289,9 @@ class AddPerformanceMaxProductListingGroupTree
             $assetGroupResourceName
         );
 
-        // Issues a search request by specifying page size.
-        $response = $googleAdsServiceClient->search(
-            SearchGoogleAdsRequest::build($customerId, $query)->setPageSize(self::PAGE_SIZE)
-        );
+        // Issues a search request.
+        $response =
+            $googleAdsServiceClient->search(SearchGoogleAdsRequest::build($customerId, $query));
 
         $assetGroupListingGroupFilters = [];
         // Iterates over all rows in all pages to get an asset group listing group filter.

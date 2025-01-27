@@ -25,22 +25,22 @@ use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Examples\Utils\Helper;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\AdTextAsset;
-use Google\Ads\GoogleAds\V16\Common\PolicyTopicEntry;
-use Google\Ads\GoogleAds\V16\Common\PolicyValidationParameter;
-use Google\Ads\GoogleAds\V16\Common\ResponsiveSearchAdInfo;
-use Google\Ads\GoogleAds\V16\Enums\AdGroupAdStatusEnum\AdGroupAdStatus;
-use Google\Ads\GoogleAds\V16\Enums\PolicyTopicEntryTypeEnum\PolicyTopicEntryType;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\Ad;
-use Google\Ads\GoogleAds\V16\Resources\AdGroupAd;
-use Google\Ads\GoogleAds\V16\Services\AdGroupAdOperation;
-use Google\Ads\GoogleAds\V16\Services\Client\AdGroupAdServiceClient;
-use Google\Ads\GoogleAds\V16\Services\MutateAdGroupAdsRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Common\AdTextAsset;
+use Google\Ads\GoogleAds\V18\Common\PolicyTopicEntry;
+use Google\Ads\GoogleAds\V18\Common\PolicyValidationParameter;
+use Google\Ads\GoogleAds\V18\Common\ResponsiveSearchAdInfo;
+use Google\Ads\GoogleAds\V18\Enums\AdGroupAdStatusEnum\AdGroupAdStatus;
+use Google\Ads\GoogleAds\V18\Enums\PolicyTopicEntryTypeEnum\PolicyTopicEntryType;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\Ad;
+use Google\Ads\GoogleAds\V18\Resources\AdGroupAd;
+use Google\Ads\GoogleAds\V18\Services\AdGroupAdOperation;
+use Google\Ads\GoogleAds\V18\Services\Client\AdGroupAdServiceClient;
+use Google\Ads\GoogleAds\V18\Services\MutateAdGroupAdsRequest;
 use Google\ApiCore\ApiException;
 
 /**
@@ -69,12 +69,6 @@ class HandleResponsiveSearchAdPolicyViolations
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {

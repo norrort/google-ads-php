@@ -25,40 +25,43 @@ use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Examples\Utils\Helper;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Util\V16\GoogleAdsFailures;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\ExpandedTextAdInfo;
-use Google\Ads\GoogleAds\V16\Common\KeywordInfo;
-use Google\Ads\GoogleAds\V16\Common\ManualCpc;
-use Google\Ads\GoogleAds\V16\Enums\AdGroupAdStatusEnum\AdGroupAdStatus;
-use Google\Ads\GoogleAds\V16\Enums\AdGroupCriterionStatusEnum\AdGroupCriterionStatus;
-use Google\Ads\GoogleAds\V16\Enums\AdGroupTypeEnum\AdGroupType;
-use Google\Ads\GoogleAds\V16\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
-use Google\Ads\GoogleAds\V16\Enums\BudgetDeliveryMethodEnum\BudgetDeliveryMethod;
-use Google\Ads\GoogleAds\V16\Enums\CampaignStatusEnum\CampaignStatus;
-use Google\Ads\GoogleAds\V16\Enums\KeywordMatchTypeEnum\KeywordMatchType;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\Ad;
-use Google\Ads\GoogleAds\V16\Resources\AdGroup;
-use Google\Ads\GoogleAds\V16\Resources\AdGroupAd;
-use Google\Ads\GoogleAds\V16\Resources\AdGroupCriterion;
-use Google\Ads\GoogleAds\V16\Resources\BatchJob;
-use Google\Ads\GoogleAds\V16\Resources\Campaign;
-use Google\Ads\GoogleAds\V16\Resources\CampaignBudget;
-use Google\Ads\GoogleAds\V16\Resources\CampaignCriterion;
-use Google\Ads\GoogleAds\V16\Services\AdGroupAdOperation;
-use Google\Ads\GoogleAds\V16\Services\AdGroupCriterionOperation;
-use Google\Ads\GoogleAds\V16\Services\AdGroupOperation;
-use Google\Ads\GoogleAds\V16\Services\BatchJobOperation;
-use Google\Ads\GoogleAds\V16\Services\BatchJobResult;
-use Google\Ads\GoogleAds\V16\Services\BatchJobServiceClient;
-use Google\Ads\GoogleAds\V16\Services\CampaignBudgetOperation;
-use Google\Ads\GoogleAds\V16\Services\CampaignCriterionOperation;
-use Google\Ads\GoogleAds\V16\Services\CampaignOperation;
-use Google\Ads\GoogleAds\V16\Services\MutateOperation;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Common\ExpandedTextAdInfo;
+use Google\Ads\GoogleAds\V18\Common\KeywordInfo;
+use Google\Ads\GoogleAds\V18\Common\ManualCpc;
+use Google\Ads\GoogleAds\V18\Enums\AdGroupAdStatusEnum\AdGroupAdStatus;
+use Google\Ads\GoogleAds\V18\Enums\AdGroupCriterionStatusEnum\AdGroupCriterionStatus;
+use Google\Ads\GoogleAds\V18\Enums\AdGroupTypeEnum\AdGroupType;
+use Google\Ads\GoogleAds\V18\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
+use Google\Ads\GoogleAds\V18\Enums\BudgetDeliveryMethodEnum\BudgetDeliveryMethod;
+use Google\Ads\GoogleAds\V18\Enums\CampaignStatusEnum\CampaignStatus;
+use Google\Ads\GoogleAds\V18\Enums\KeywordMatchTypeEnum\KeywordMatchType;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\Ad;
+use Google\Ads\GoogleAds\V18\Resources\AdGroup;
+use Google\Ads\GoogleAds\V18\Resources\AdGroupAd;
+use Google\Ads\GoogleAds\V18\Resources\AdGroupCriterion;
+use Google\Ads\GoogleAds\V18\Resources\BatchJob;
+use Google\Ads\GoogleAds\V18\Resources\Campaign;
+use Google\Ads\GoogleAds\V18\Resources\CampaignBudget;
+use Google\Ads\GoogleAds\V18\Resources\CampaignCriterion;
+use Google\Ads\GoogleAds\V18\Services\AddBatchJobOperationsRequest;
+use Google\Ads\GoogleAds\V18\Services\AdGroupAdOperation;
+use Google\Ads\GoogleAds\V18\Services\AdGroupCriterionOperation;
+use Google\Ads\GoogleAds\V18\Services\AdGroupOperation;
+use Google\Ads\GoogleAds\V18\Services\BatchJobOperation;
+use Google\Ads\GoogleAds\V18\Services\BatchJobResult;
+use Google\Ads\GoogleAds\V18\Services\CampaignBudgetOperation;
+use Google\Ads\GoogleAds\V18\Services\CampaignCriterionOperation;
+use Google\Ads\GoogleAds\V18\Services\CampaignOperation;
+use Google\Ads\GoogleAds\V18\Services\Client\BatchJobServiceClient;
+use Google\Ads\GoogleAds\V18\Services\ListBatchJobResultsRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateBatchJobRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateOperation;
+use Google\Ads\GoogleAds\V18\Services\RunBatchJobRequest;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\OperationResponse;
 
@@ -97,12 +100,6 @@ class AddCompleteCampaignsUsingBatchJob
         $googleAdsClient = (new GoogleAdsClientBuilder())
             ->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
@@ -169,16 +166,15 @@ class AddCompleteCampaignsUsingBatchJob
     private static function createBatchJob(
         BatchJobServiceClient $batchJobServiceClient,
         int $customerId
-    ) {
+    ): string {
         // Creates a batch job operation to create a new batch job.
         $batchJobOperation = new BatchJobOperation();
         $batchJobOperation->setCreate(new BatchJob());
 
         // Issues a request to the API and get the batch job's resource name.
-        $batchJobResourceName =
-            $batchJobServiceClient->mutateBatchJob($customerId, $batchJobOperation)
-                ->getResult()
-                ->getResourceName();
+        $batchJobResourceName = $batchJobServiceClient->mutateBatchJob(
+            MutateBatchJobRequest::build($customerId, $batchJobOperation)
+        )->getResult()->getResourceName();
         printf(
             "Created a batch job with resource name: '%s'.%s",
             $batchJobResourceName,
@@ -203,10 +199,13 @@ class AddCompleteCampaignsUsingBatchJob
         BatchJobServiceClient $batchJobServiceClient,
         int $customerId,
         string $batchJobResourceName
-    ) {
+    ): void {
         $response = $batchJobServiceClient->addBatchJobOperations(
-            $batchJobResourceName,
-            self::buildAllOperations($customerId)
+            AddBatchJobOperationsRequest::build(
+                $batchJobResourceName,
+                '',
+                self::buildAllOperations($customerId)
+            )
         );
         printf(
             "%d mutate operations have been added so far.%s",
@@ -233,8 +232,9 @@ class AddCompleteCampaignsUsingBatchJob
     private static function runBatchJob(
         BatchJobServiceClient $batchJobServiceClient,
         string $batchJobResourceName
-    ) {
-        $operationResponse = $batchJobServiceClient->runBatchJob($batchJobResourceName);
+    ): OperationResponse {
+        $operationResponse =
+            $batchJobServiceClient->runBatchJob(RunBatchJobRequest::build($batchJobResourceName));
         printf(
             "Batch job with resource name '%s' has been executed.%s",
             $batchJobResourceName,
@@ -251,7 +251,7 @@ class AddCompleteCampaignsUsingBatchJob
      * @param OperationResponse $operationResponse the operation response used to poll the server
      */
     // [START add_complete_campaigns_using_batch_job_3]
-    private static function pollBatchJob(OperationResponse $operationResponse)
+    private static function pollBatchJob(OperationResponse $operationResponse): void
     {
         $operationResponse->pollUntilComplete([
             'initialPollDelayMillis' => self::POLL_FREQUENCY_SECONDS * 1000,
@@ -270,7 +270,7 @@ class AddCompleteCampaignsUsingBatchJob
     private static function fetchAndPrintResults(
         BatchJobServiceClient $batchJobServiceClient,
         string $batchJobResourceName
-    ) {
+    ): void {
         printf(
             "Batch job with resource name '%s' has finished. Now, printing its results...%s",
             $batchJobResourceName,
@@ -278,8 +278,7 @@ class AddCompleteCampaignsUsingBatchJob
         );
         // Gets all the results from running batch job and print their information.
         $batchJobResults = $batchJobServiceClient->listBatchJobResults(
-            $batchJobResourceName,
-            ['pageSize' => self::PAGE_SIZE]
+            ListBatchJobResultsRequest::build($batchJobResourceName)->setPageSize(self::PAGE_SIZE)
         );
         foreach ($batchJobResults->iterateAllElements() as $batchJobResult) {
             /** @var BatchJobResult $batchJobResult */
@@ -304,7 +303,7 @@ class AddCompleteCampaignsUsingBatchJob
      * @param int $customerId the customer ID
      * @return MutateOperation[] the mutate operations to be added to a batch job
      */
-    private static function buildAllOperations(int $customerId)
+    private static function buildAllOperations(int $customerId): array
     {
         $mutateOperations = [];
 
@@ -373,7 +372,7 @@ class AddCompleteCampaignsUsingBatchJob
      * @param int $customerId the customer ID
      * @return CampaignBudgetOperation the campaign budget operation
      */
-    private static function buildCampaignBudgetOperation(int $customerId)
+    private static function buildCampaignBudgetOperation(int $customerId): CampaignBudgetOperation
     {
         // Creates a campaign budget operation.
         return new CampaignBudgetOperation([
@@ -401,7 +400,7 @@ class AddCompleteCampaignsUsingBatchJob
     private static function buildCampaignOperations(
         int $customerId,
         string $campaignBudgetResourceName
-    ) {
+    ): array {
         $operations = [];
         for ($i = 0; $i < self::NUMBER_OF_CAMPAIGNS_TO_ADD; $i++) {
             // Creates a campaign.
@@ -439,7 +438,7 @@ class AddCompleteCampaignsUsingBatchJob
      *     campaign criteria
      * @return CampaignCriterionOperation[] the campaign criterion operations
      */
-    private static function buildCampaignCriterionOperations(array $campaignOperations)
+    private static function buildCampaignCriterionOperations(array $campaignOperations): array
     {
         $operations = [];
         foreach ($campaignOperations as $campaignOperation) {
@@ -468,8 +467,10 @@ class AddCompleteCampaignsUsingBatchJob
      *     ad groups
      * @return AdGroupOperation[] the ad group operations
      */
-    private static function buildAdGroupOperations(int $customerId, array $campaignOperations)
-    {
+    private static function buildAdGroupOperations(
+        int $customerId,
+        array $campaignOperations
+    ): array {
         $operations = [];
         foreach ($campaignOperations as $campaignOperation) {
             for ($i = 0; $i < self::NUMBER_OF_AD_GROUPS_TO_ADD; $i++) {
@@ -504,7 +505,7 @@ class AddCompleteCampaignsUsingBatchJob
      *     ad group criteria
      * @return AdGroupCriterionOperation[] the ad group criterion operations
      */
-    private static function buildAdGroupCriterionOperations(array $adGroupOperations)
+    private static function buildAdGroupCriterionOperations(array $adGroupOperations): array
     {
         $operations = [];
         foreach ($adGroupOperations as $adGroupOperation) {
@@ -539,7 +540,7 @@ class AddCompleteCampaignsUsingBatchJob
      *     ad group ads
      * @return AdGroupAdOperation[] the ad group ad operations
      */
-    private static function buildAdGroupAdOperations(array $adGroupOperations)
+    private static function buildAdGroupAdOperations(array $adGroupOperations): array
     {
         $operations = [];
         foreach ($adGroupOperations as $adGroupOperation) {
@@ -570,7 +571,7 @@ class AddCompleteCampaignsUsingBatchJob
      *
      * @return int the next temporary ID
      */
-    private static function getNextTemporaryId()
+    private static function getNextTemporaryId(): int
     {
         return self::$temporaryId--;
     }

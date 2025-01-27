@@ -25,40 +25,40 @@ use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Examples\Utils\Helper;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\AudienceInfo;
-use Google\Ads\GoogleAds\V16\Common\ImageAsset;
-use Google\Ads\GoogleAds\V16\Common\LanguageInfo;
-use Google\Ads\GoogleAds\V16\Common\LocationInfo;
-use Google\Ads\GoogleAds\V16\Common\MaximizeConversionValue;
-use Google\Ads\GoogleAds\V16\Common\TextAsset;
-use Google\Ads\GoogleAds\V16\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
-use Google\Ads\GoogleAds\V16\Enums\AssetFieldTypeEnum\AssetFieldType;
-use Google\Ads\GoogleAds\V16\Enums\AssetGroupStatusEnum\AssetGroupStatus;
-use Google\Ads\GoogleAds\V16\Enums\BudgetDeliveryMethodEnum\BudgetDeliveryMethod;
-use Google\Ads\GoogleAds\V16\Enums\CampaignStatusEnum\CampaignStatus;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\Asset;
-use Google\Ads\GoogleAds\V16\Resources\AssetGroup;
-use Google\Ads\GoogleAds\V16\Resources\AssetGroupAsset;
-use Google\Ads\GoogleAds\V16\Resources\AssetGroupSignal;
-use Google\Ads\GoogleAds\V16\Resources\Campaign;
-use Google\Ads\GoogleAds\V16\Resources\CampaignBudget;
-use Google\Ads\GoogleAds\V16\Resources\CampaignCriterion;
-use Google\Ads\GoogleAds\V16\Services\AssetGroupAssetOperation;
-use Google\Ads\GoogleAds\V16\Services\AssetGroupOperation;
-use Google\Ads\GoogleAds\V16\Services\AssetGroupSignalOperation;
-use Google\Ads\GoogleAds\V16\Services\AssetOperation;
-use Google\Ads\GoogleAds\V16\Services\CampaignBudgetOperation;
-use Google\Ads\GoogleAds\V16\Services\CampaignCriterionOperation;
-use Google\Ads\GoogleAds\V16\Services\CampaignOperation;
-use Google\Ads\GoogleAds\V16\Services\MutateGoogleAdsRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateGoogleAdsResponse;
-use Google\Ads\GoogleAds\V16\Services\MutateOperation;
-use Google\Ads\GoogleAds\V16\Services\MutateOperationResponse;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Common\AudienceInfo;
+use Google\Ads\GoogleAds\V18\Common\ImageAsset;
+use Google\Ads\GoogleAds\V18\Common\LanguageInfo;
+use Google\Ads\GoogleAds\V18\Common\LocationInfo;
+use Google\Ads\GoogleAds\V18\Common\MaximizeConversionValue;
+use Google\Ads\GoogleAds\V18\Common\TextAsset;
+use Google\Ads\GoogleAds\V18\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
+use Google\Ads\GoogleAds\V18\Enums\AssetFieldTypeEnum\AssetFieldType;
+use Google\Ads\GoogleAds\V18\Enums\AssetGroupStatusEnum\AssetGroupStatus;
+use Google\Ads\GoogleAds\V18\Enums\BudgetDeliveryMethodEnum\BudgetDeliveryMethod;
+use Google\Ads\GoogleAds\V18\Enums\CampaignStatusEnum\CampaignStatus;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\Asset;
+use Google\Ads\GoogleAds\V18\Resources\AssetGroup;
+use Google\Ads\GoogleAds\V18\Resources\AssetGroupAsset;
+use Google\Ads\GoogleAds\V18\Resources\AssetGroupSignal;
+use Google\Ads\GoogleAds\V18\Resources\Campaign;
+use Google\Ads\GoogleAds\V18\Resources\CampaignBudget;
+use Google\Ads\GoogleAds\V18\Resources\CampaignCriterion;
+use Google\Ads\GoogleAds\V18\Services\AssetGroupAssetOperation;
+use Google\Ads\GoogleAds\V18\Services\AssetGroupOperation;
+use Google\Ads\GoogleAds\V18\Services\AssetGroupSignalOperation;
+use Google\Ads\GoogleAds\V18\Services\AssetOperation;
+use Google\Ads\GoogleAds\V18\Services\CampaignBudgetOperation;
+use Google\Ads\GoogleAds\V18\Services\CampaignCriterionOperation;
+use Google\Ads\GoogleAds\V18\Services\CampaignOperation;
+use Google\Ads\GoogleAds\V18\Services\MutateGoogleAdsRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateGoogleAdsResponse;
+use Google\Ads\GoogleAds\V18\Services\MutateOperation;
+use Google\Ads\GoogleAds\V18\Services\MutateOperationResponse;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Serializer;
 
@@ -115,12 +115,6 @@ class AddPerformanceMaxCampaign
         $googleAdsClient = (new GoogleAdsClientBuilder())
             ->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {

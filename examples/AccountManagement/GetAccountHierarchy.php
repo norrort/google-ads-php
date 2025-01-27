@@ -24,16 +24,16 @@ use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsServerStreamDecorator;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\CustomerClient;
-use Google\Ads\GoogleAds\V16\Services\CustomerServiceClient;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\ListAccessibleCustomersRequest;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsStreamRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsServerStreamDecorator;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\CustomerClient;
+use Google\Ads\GoogleAds\V18\Services\CustomerServiceClient;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\ListAccessibleCustomersRequest;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsStreamRequest;
 use Google\ApiCore\ApiException;
 
 /**
@@ -85,12 +85,6 @@ class GetAccountHierarchy
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
@@ -210,12 +204,6 @@ class GetAccountHierarchy
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
             ->withLoginCustomerId($loginCustomerId ?? $rootCustomerId)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         // Creates the Google Ads Service client.
@@ -237,7 +225,7 @@ class GetAccountHierarchy
 
         while (!empty($managerCustomerIdsToSearch)) {
             $customerIdToSearch = array_shift($managerCustomerIdsToSearch);
-            // Issues a search request by specifying page size.
+            // Issues a search request.
             /** @var GoogleAdsServerStreamDecorator $stream */
             $stream = $googleAdsServiceClient->searchStream(SearchGoogleAdsStreamRequest::build(
                 $customerIdToSearch,

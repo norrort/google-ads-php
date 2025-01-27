@@ -23,17 +23,18 @@ require __DIR__ . '/../../vendor/autoload.php';
 use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\V16\Common\PolicyTopicEntry;
-use Google\Ads\GoogleAds\V16\Common\PolicyTopicEvidence;
-use Google\Ads\GoogleAds\V16\Enums\AdTypeEnum\AdType;
-use Google\Ads\GoogleAds\V16\Enums\PolicyTopicEntryTypeEnum\PolicyTopicEntryType;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\V18\Common\PolicyTopicEntry;
+use Google\Ads\GoogleAds\V18\Common\PolicyTopicEvidence;
+use Google\Ads\GoogleAds\V18\Enums\AdTypeEnum\AdType;
+use Google\Ads\GoogleAds\V18\Enums\PolicyTopicEntryTypeEnum\PolicyTopicEntryType;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\V18\Services\SearchSettings;
 use Google\ApiCore\ApiException;
 
 /** This example retrieves all the disapproved ads in a given campaign. */
@@ -41,8 +42,6 @@ class GetAllDisapprovedAds
 {
     private const CUSTOMER_ID = 'INSERT_CUSTOMER_ID_HERE';
     private const CAMPAIGN_ID = 'INSERT_CAMPAIGN_ID_HERE';
-
-    private const PAGE_SIZE = 1000;
 
     public static function main()
     {
@@ -61,12 +60,6 @@ class GetAllDisapprovedAds
         $googleAdsClient = (new GoogleAdsClientBuilder())
             ->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
@@ -124,11 +117,11 @@ class GetAllDisapprovedAds
                   . 'WHERE campaign.id = ' . $campaignId . ' '
                   . 'AND ad_group_ad.policy_summary.approval_status = DISAPPROVED';
 
-        // Issues a search request by specifying page size.
+        // Issues a search request.
         $response = $googleAdsServiceClient->search(
-            SearchGoogleAdsRequest::build($customerId, $query)
-                ->setPageSize(self::PAGE_SIZE)
-                ->setReturnTotalResultsCount(true)
+            SearchGoogleAdsRequest::build($customerId, $query)->setSearchSettings(
+                new SearchSettings(['return_total_results_count' => true])
+            )
         );
 
         // Iterates over all rows in all pages and counts disapproved ads.

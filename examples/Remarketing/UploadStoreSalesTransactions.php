@@ -25,35 +25,35 @@ use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Examples\Utils\Helper;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsServerStreamDecorator;
-use Google\Ads\GoogleAds\Util\V16\GoogleAdsFailures;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\Consent;
-use Google\Ads\GoogleAds\V16\Common\ItemAttribute;
-use Google\Ads\GoogleAds\V16\Common\OfflineUserAddressInfo;
-use Google\Ads\GoogleAds\V16\Common\StoreSalesMetadata;
-use Google\Ads\GoogleAds\V16\Common\StoreSalesThirdPartyMetadata;
-use Google\Ads\GoogleAds\V16\Common\TransactionAttribute;
-use Google\Ads\GoogleAds\V16\Common\UserData;
-use Google\Ads\GoogleAds\V16\Common\UserIdentifier;
-use Google\Ads\GoogleAds\V16\Enums\ConsentStatusEnum\ConsentStatus;
-use Google\Ads\GoogleAds\V16\Enums\OfflineUserDataJobFailureReasonEnum\OfflineUserDataJobFailureReason;
-use Google\Ads\GoogleAds\V16\Enums\OfflineUserDataJobStatusEnum\OfflineUserDataJobStatus;
-use Google\Ads\GoogleAds\V16\Enums\OfflineUserDataJobTypeEnum\OfflineUserDataJobType;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\OfflineUserDataJob;
-use Google\Ads\GoogleAds\V16\Services\AddOfflineUserDataJobOperationsRequest;
-use Google\Ads\GoogleAds\V16\Services\AddOfflineUserDataJobOperationsResponse;
-use Google\Ads\GoogleAds\V16\Services\Client\OfflineUserDataJobServiceClient;
-use Google\Ads\GoogleAds\V16\Services\CreateOfflineUserDataJobRequest;
-use Google\Ads\GoogleAds\V16\Services\CreateOfflineUserDataJobResponse;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\OfflineUserDataJobOperation;
-use Google\Ads\GoogleAds\V16\Services\RunOfflineUserDataJobRequest;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsStreamRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsServerStreamDecorator;
+use Google\Ads\GoogleAds\Util\V18\GoogleAdsFailures;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Common\Consent;
+use Google\Ads\GoogleAds\V18\Common\ItemAttribute;
+use Google\Ads\GoogleAds\V18\Common\OfflineUserAddressInfo;
+use Google\Ads\GoogleAds\V18\Common\StoreSalesMetadata;
+use Google\Ads\GoogleAds\V18\Common\StoreSalesThirdPartyMetadata;
+use Google\Ads\GoogleAds\V18\Common\TransactionAttribute;
+use Google\Ads\GoogleAds\V18\Common\UserData;
+use Google\Ads\GoogleAds\V18\Common\UserIdentifier;
+use Google\Ads\GoogleAds\V18\Enums\ConsentStatusEnum\ConsentStatus;
+use Google\Ads\GoogleAds\V18\Enums\OfflineUserDataJobFailureReasonEnum\OfflineUserDataJobFailureReason;
+use Google\Ads\GoogleAds\V18\Enums\OfflineUserDataJobStatusEnum\OfflineUserDataJobStatus;
+use Google\Ads\GoogleAds\V18\Enums\OfflineUserDataJobTypeEnum\OfflineUserDataJobType;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\OfflineUserDataJob;
+use Google\Ads\GoogleAds\V18\Services\AddOfflineUserDataJobOperationsRequest;
+use Google\Ads\GoogleAds\V18\Services\AddOfflineUserDataJobOperationsResponse;
+use Google\Ads\GoogleAds\V18\Services\Client\OfflineUserDataJobServiceClient;
+use Google\Ads\GoogleAds\V18\Services\CreateOfflineUserDataJobRequest;
+use Google\Ads\GoogleAds\V18\Services\CreateOfflineUserDataJobResponse;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\OfflineUserDataJobOperation;
+use Google\Ads\GoogleAds\V18\Services\RunOfflineUserDataJobRequest;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsStreamRequest;
 use Google\ApiCore\ApiException;
 
 /**
@@ -160,12 +160,6 @@ class UploadStoreSalesTransactions
         $googleAdsClient = (new GoogleAdsClientBuilder())
             ->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {

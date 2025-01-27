@@ -24,22 +24,22 @@ use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\DateRange;
-use Google\Ads\GoogleAds\V16\Common\KeywordInfo;
-use Google\Ads\GoogleAds\V16\Enums\KeywordMatchTypeEnum\KeywordMatchType;
-use Google\Ads\GoogleAds\V16\Enums\KeywordPlanNetworkEnum\KeywordPlanNetwork;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Services\BiddableKeyword;
-use Google\Ads\GoogleAds\V16\Services\CampaignToForecast;
-use Google\Ads\GoogleAds\V16\Services\CampaignToForecast\CampaignBiddingStrategy;
-use Google\Ads\GoogleAds\V16\Services\CriterionBidModifier;
-use Google\Ads\GoogleAds\V16\Services\ForecastAdGroup;
-use Google\Ads\GoogleAds\V16\Services\GenerateKeywordForecastMetricsRequest;
-use Google\Ads\GoogleAds\V16\Services\ManualCpcBiddingStrategy;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Common\DateRange;
+use Google\Ads\GoogleAds\V18\Common\KeywordInfo;
+use Google\Ads\GoogleAds\V18\Enums\KeywordMatchTypeEnum\KeywordMatchType;
+use Google\Ads\GoogleAds\V18\Enums\KeywordPlanNetworkEnum\KeywordPlanNetwork;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Services\BiddableKeyword;
+use Google\Ads\GoogleAds\V18\Services\CampaignToForecast;
+use Google\Ads\GoogleAds\V18\Services\CampaignToForecast\CampaignBiddingStrategy;
+use Google\Ads\GoogleAds\V18\Services\CriterionBidModifier;
+use Google\Ads\GoogleAds\V18\Services\ForecastAdGroup;
+use Google\Ads\GoogleAds\V18\Services\GenerateKeywordForecastMetricsRequest;
+use Google\Ads\GoogleAds\V18\Services\ManualCpcBiddingStrategy;
 use Google\ApiCore\ApiException;
 
 /**
@@ -67,12 +67,6 @@ class GenerateForecastMetrics
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {

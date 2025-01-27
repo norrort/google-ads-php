@@ -25,32 +25,32 @@ use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Examples\Utils\Helper;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\DynamicEducationAsset;
-use Google\Ads\GoogleAds\V16\Common\PageFeedAsset;
-use Google\Ads\GoogleAds\V16\Common\WebpageConditionInfo;
-use Google\Ads\GoogleAds\V16\Common\WebpageInfo;
-use Google\Ads\GoogleAds\V16\Enums\AssetSetTypeEnum\AssetSetType;
-use Google\Ads\GoogleAds\V16\Enums\WebpageConditionOperandEnum\WebpageConditionOperand;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\AdGroupCriterion;
-use Google\Ads\GoogleAds\V16\Resources\Asset;
-use Google\Ads\GoogleAds\V16\Resources\AssetSet;
-use Google\Ads\GoogleAds\V16\Resources\AssetSetAsset;
-use Google\Ads\GoogleAds\V16\Resources\CampaignAssetSet;
-use Google\Ads\GoogleAds\V16\Services\AdGroupCriterionOperation;
-use Google\Ads\GoogleAds\V16\Services\AssetOperation;
-use Google\Ads\GoogleAds\V16\Services\AssetSetAssetOperation;
-use Google\Ads\GoogleAds\V16\Services\AssetSetOperation;
-use Google\Ads\GoogleAds\V16\Services\CampaignAssetSetOperation;
-use Google\Ads\GoogleAds\V16\Services\MutateAdGroupCriteriaRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateAssetSetAssetsRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateAssetSetsRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateAssetsRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateCampaignAssetSetsRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Common\DynamicEducationAsset;
+use Google\Ads\GoogleAds\V18\Common\PageFeedAsset;
+use Google\Ads\GoogleAds\V18\Common\WebpageConditionInfo;
+use Google\Ads\GoogleAds\V18\Common\WebpageInfo;
+use Google\Ads\GoogleAds\V18\Enums\AssetSetTypeEnum\AssetSetType;
+use Google\Ads\GoogleAds\V18\Enums\WebpageConditionOperandEnum\WebpageConditionOperand;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\AdGroupCriterion;
+use Google\Ads\GoogleAds\V18\Resources\Asset;
+use Google\Ads\GoogleAds\V18\Resources\AssetSet;
+use Google\Ads\GoogleAds\V18\Resources\AssetSetAsset;
+use Google\Ads\GoogleAds\V18\Resources\CampaignAssetSet;
+use Google\Ads\GoogleAds\V18\Services\AdGroupCriterionOperation;
+use Google\Ads\GoogleAds\V18\Services\AssetOperation;
+use Google\Ads\GoogleAds\V18\Services\AssetSetAssetOperation;
+use Google\Ads\GoogleAds\V18\Services\AssetSetOperation;
+use Google\Ads\GoogleAds\V18\Services\CampaignAssetSetOperation;
+use Google\Ads\GoogleAds\V18\Services\MutateAdGroupCriteriaRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateAssetSetAssetsRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateAssetSetsRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateAssetsRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateCampaignAssetSetsRequest;
 use Google\ApiCore\ApiException;
 
 /** Adds a page feed with URLs for a Dynamic Search Ads campaign. */
@@ -77,12 +77,6 @@ class AddDynamicPageFeedAsset
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {

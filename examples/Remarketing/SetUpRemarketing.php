@@ -25,38 +25,38 @@ use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Examples\Utils\Helper;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
 use Google\Ads\GoogleAds\Util\FieldMasks;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\FlexibleRuleOperandInfo;
-use Google\Ads\GoogleAds\V16\Common\FlexibleRuleUserListInfo;
-use Google\Ads\GoogleAds\V16\Common\RuleBasedUserListInfo;
-use Google\Ads\GoogleAds\V16\Common\UserListInfo;
-use Google\Ads\GoogleAds\V16\Common\UserListRuleInfo;
-use Google\Ads\GoogleAds\V16\Common\UserListRuleItemGroupInfo;
-use Google\Ads\GoogleAds\V16\Common\UserListRuleItemInfo;
-use Google\Ads\GoogleAds\V16\Common\UserListStringRuleItemInfo;
-use Google\Ads\GoogleAds\V16\Enums\UserListFlexibleRuleOperatorEnum\UserListFlexibleRuleOperator;
-use Google\Ads\GoogleAds\V16\Enums\UserListMembershipStatusEnum\UserListMembershipStatus;
-use Google\Ads\GoogleAds\V16\Enums\UserListPrepopulationStatusEnum\UserListPrepopulationStatus;
-use Google\Ads\GoogleAds\V16\Enums\UserListStringRuleItemOperatorEnum\UserListStringRuleItemOperator;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\AdGroupCriterion;
-use Google\Ads\GoogleAds\V16\Resources\CampaignCriterion;
-use Google\Ads\GoogleAds\V16\Resources\UserList;
-use Google\Ads\GoogleAds\V16\Services\AdGroupCriterionOperation;
-use Google\Ads\GoogleAds\V16\Services\CampaignCriterionOperation;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\MutateAdGroupCriteriaRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateAdGroupCriteriaResponse;
-use Google\Ads\GoogleAds\V16\Services\MutateCampaignCriteriaRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateCampaignCriteriaResponse;
-use Google\Ads\GoogleAds\V16\Services\MutateUserListsRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateUserListsResponse;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsRequest;
-use Google\Ads\GoogleAds\V16\Services\UserListOperation;
+use Google\Ads\GoogleAds\Util\V18\ResourceNames;
+use Google\Ads\GoogleAds\V18\Common\FlexibleRuleOperandInfo;
+use Google\Ads\GoogleAds\V18\Common\FlexibleRuleUserListInfo;
+use Google\Ads\GoogleAds\V18\Common\RuleBasedUserListInfo;
+use Google\Ads\GoogleAds\V18\Common\UserListInfo;
+use Google\Ads\GoogleAds\V18\Common\UserListRuleInfo;
+use Google\Ads\GoogleAds\V18\Common\UserListRuleItemGroupInfo;
+use Google\Ads\GoogleAds\V18\Common\UserListRuleItemInfo;
+use Google\Ads\GoogleAds\V18\Common\UserListStringRuleItemInfo;
+use Google\Ads\GoogleAds\V18\Enums\UserListFlexibleRuleOperatorEnum\UserListFlexibleRuleOperator;
+use Google\Ads\GoogleAds\V18\Enums\UserListMembershipStatusEnum\UserListMembershipStatus;
+use Google\Ads\GoogleAds\V18\Enums\UserListPrepopulationStatusEnum\UserListPrepopulationStatus;
+use Google\Ads\GoogleAds\V18\Enums\UserListStringRuleItemOperatorEnum\UserListStringRuleItemOperator;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\AdGroupCriterion;
+use Google\Ads\GoogleAds\V18\Resources\CampaignCriterion;
+use Google\Ads\GoogleAds\V18\Resources\UserList;
+use Google\Ads\GoogleAds\V18\Services\AdGroupCriterionOperation;
+use Google\Ads\GoogleAds\V18\Services\CampaignCriterionOperation;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\MutateAdGroupCriteriaRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateAdGroupCriteriaResponse;
+use Google\Ads\GoogleAds\V18\Services\MutateCampaignCriteriaRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateCampaignCriteriaResponse;
+use Google\Ads\GoogleAds\V18\Services\MutateUserListsRequest;
+use Google\Ads\GoogleAds\V18\Services\MutateUserListsResponse;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\V18\Services\UserListOperation;
 use Google\ApiCore\ApiException;
 
 /**
@@ -78,8 +78,6 @@ class SetUpRemarketing
     // the line below with your desired bid modifier value.
     private const BID_MODIFIER_VALUE = 1.5;
 
-    private const PAGE_SIZE = 1000;
-
     public static function main()
     {
         // Either pass the required parameters for this example on the command line, or insert them
@@ -99,12 +97,6 @@ class SetUpRemarketing
         $googleAdsClient = (new GoogleAdsClientBuilder())
             ->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
@@ -423,9 +415,8 @@ class SetUpRemarketing
         $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
 
         // Issues the search request.
-        $response = $googleAdsServiceClient->search(
-            SearchGoogleAdsRequest::build($customerId, $query)->setPageSize(self::PAGE_SIZE)
-        );
+        $response =
+            $googleAdsServiceClient->search(SearchGoogleAdsRequest::build($customerId, $query));
 
         $userListCriteria = [];
         // Iterates over all rows in all pages. Prints the user list criteria and adds the ad group

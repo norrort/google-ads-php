@@ -24,25 +24,25 @@ use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\V16\Common\DeviceInfo;
-use Google\Ads\GoogleAds\V16\Common\GenderInfo;
-use Google\Ads\GoogleAds\V16\Enums\DeviceEnum\Device;
-use Google\Ads\GoogleAds\V16\Enums\GenderTypeEnum\GenderType;
-use Google\Ads\GoogleAds\V16\Enums\ReachPlanAgeRangeEnum\ReachPlanAgeRange;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Services\CampaignDuration;
-use Google\Ads\GoogleAds\V16\Services\GenerateReachForecastRequest;
-use Google\Ads\GoogleAds\V16\Services\ListPlannableLocationsRequest;
-use Google\Ads\GoogleAds\V16\Services\ListPlannableProductsRequest;
-use Google\Ads\GoogleAds\V16\Services\PlannableLocation;
-use Google\Ads\GoogleAds\V16\Services\PlannedProduct;
-use Google\Ads\GoogleAds\V16\Services\PlannedProductReachForecast;
-use Google\Ads\GoogleAds\V16\Services\ProductMetadata;
-use Google\Ads\GoogleAds\V16\Services\ReachForecast;
-use Google\Ads\GoogleAds\V16\Services\Targeting;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\V18\Common\DeviceInfo;
+use Google\Ads\GoogleAds\V18\Common\GenderInfo;
+use Google\Ads\GoogleAds\V18\Enums\DeviceEnum\Device;
+use Google\Ads\GoogleAds\V18\Enums\GenderTypeEnum\GenderType;
+use Google\Ads\GoogleAds\V18\Enums\ReachPlanAgeRangeEnum\ReachPlanAgeRange;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Services\CampaignDuration;
+use Google\Ads\GoogleAds\V18\Services\GenerateReachForecastRequest;
+use Google\Ads\GoogleAds\V18\Services\ListPlannableLocationsRequest;
+use Google\Ads\GoogleAds\V18\Services\ListPlannableProductsRequest;
+use Google\Ads\GoogleAds\V18\Services\PlannableLocation;
+use Google\Ads\GoogleAds\V18\Services\PlannedProduct;
+use Google\Ads\GoogleAds\V18\Services\PlannedProductReachForecast;
+use Google\Ads\GoogleAds\V18\Services\ProductMetadata;
+use Google\Ads\GoogleAds\V18\Services\ReachForecast;
+use Google\Ads\GoogleAds\V18\Services\Targeting;
 use Google\ApiCore\ApiException;
 
 /**
@@ -75,12 +75,6 @@ class ForecastReach
         $googleAdsClient = (new GoogleAdsClientBuilder())
             ->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {

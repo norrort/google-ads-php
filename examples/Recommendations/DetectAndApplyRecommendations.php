@@ -24,16 +24,16 @@ use GetOpt\GetOpt;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentNames;
 use Google\Ads\GoogleAds\Examples\Utils\ArgumentParser;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClient;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsClientBuilder;
-use Google\Ads\GoogleAds\Lib\V16\GoogleAdsException;
-use Google\Ads\GoogleAds\V16\Enums\KeywordMatchTypeEnum\KeywordMatchType;
-use Google\Ads\GoogleAds\V16\Errors\GoogleAdsError;
-use Google\Ads\GoogleAds\V16\Resources\Recommendation;
-use Google\Ads\GoogleAds\V16\Services\ApplyRecommendationOperation;
-use Google\Ads\GoogleAds\V16\Services\ApplyRecommendationRequest;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\SearchGoogleAdsRequest;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClient;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsClientBuilder;
+use Google\Ads\GoogleAds\Lib\V18\GoogleAdsException;
+use Google\Ads\GoogleAds\V18\Enums\KeywordMatchTypeEnum\KeywordMatchType;
+use Google\Ads\GoogleAds\V18\Errors\GoogleAdsError;
+use Google\Ads\GoogleAds\V18\Resources\Recommendation;
+use Google\Ads\GoogleAds\V18\Services\ApplyRecommendationOperation;
+use Google\Ads\GoogleAds\V18\Services\ApplyRecommendationRequest;
+use Google\Ads\GoogleAds\V18\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V18\Services\SearchGoogleAdsRequest;
 use Google\ApiCore\ApiException;
 
 /**
@@ -44,11 +44,11 @@ use Google\ApiCore\ApiException;
  * obsolete recommendations throw an error when applied. For more details, see:
  * https://developers.google.com/google-ads/api/docs/recommendations#take_action
  *
- * As of Google Ads API v15 users can subscribe to certain recommendation types to
- * apply them automatically. For more details, see:
+ * You can subscribe to certain recommendation types to apply them automatically.
+ * For more details, see:
  * https://developers.google.com/google-ads/api/docs/recommendations#auto-apply
  *
- * As of Google Ads API v16 users can proactively generate certain recommendation
+ * You can also proactively generate certain recommendation
  * types during the campaign construction process. For more details see:
  * https://developers.google.com/google-ads/api/docs/recommendations#recommendations-in-campaign-construction.
  */
@@ -71,12 +71,6 @@ class DetectAndApplyRecommendations
         // OAuth2 credentials above.
         $googleAdsClient = (new GoogleAdsClientBuilder())->fromFile()
             ->withOAuth2Credential($oAuth2Credential)
-            // We set this value to true to show how to use GAPIC v2 source code. You can remove the
-            // below line if you wish to use the old-style source code. Note that in that case, you
-            // probably need to modify some parts of the code below to make it work.
-            // For more information, see
-            // https://developers.devsite.corp.google.com/google-ads/api/docs/client-libs/php/gapic.
-            ->usingGapicV2Source(true)
             ->build();
 
         try {
